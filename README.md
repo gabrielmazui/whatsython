@@ -1,99 +1,186 @@
 # 🟢 Whatsython Chat
 
-A simple **LAN chat application** in Python using TCP sockets, allowing multiple users to communicate in a group.
+Whatsython is a terminal-based real-time chat application written in Python, designed to feel as close as possible to a real chat app — entirely inside the terminal.
 
-> This project was created as a learning exercise to practice working with Python sockets.
+It simulates a GUI-like experience using cursor control, colored text, and live message rendering, similar to WhatsApp or Discord — but running purely in a shell.
+
+This project was created as a learning exercise to practice socket programming, concurrency, and terminal UI handling using only the Python standard library.
 
 ---
 
 ## ✨ Features
 
-- Real-time chat between multiple users on the same network
-- Simple command-line interface
-- Cross-platform: Windows, Linux, and macOS
+- Real-time chat over LAN using TCP sockets
+- Multiple chat rooms
+  - Create new chats
+  - Join existing chats
+- Terminal GUI behavior
+  - Messages appear instantly while typing
+  - Input line stays fixed at the bottom
+  - Incoming messages scroll above
+  - Join / leave messages rendered live
+- Colored output
+  - Users, system messages, errors, and DMs use different colors
+- Direct Messages (DM)
+- List users in the current chat
+- Unique nicknames (global)
+- Concurrent design
+  - Server uses select()
+  - Client uses threads
+- Custom protocol
+  - TCP framing with 2-byte length header
+  - JSON payloads
+- Cross-platform
+  - Windows
+  - Linux
+  - macOS
+- No external libraries required
 
 ---
 
 ## 🛠 Requirements
 
 - Python 3.x
+- Terminal with ANSI escape code support
 
 ---
 
 ## 🚀 How to Run
 
-### 1️⃣ Start the Server
-
-The server listens for incoming connections from clients on a specific port.
-
-To accept connections from any device in your LAN:
-
-```bash
-python chat_server.py PORT
-```
-
-Or equivalently:
-
-```bash
-python chat_server.py 0.0.0.0 PORT
-```
-
-> **Notes:**  
-> - Replace `PORT` with the port number you want the server to listen on.  
-> - `0.0.0.0` allows the server to accept connections from any IP in your LAN.  
-> - You can also leave it as `""` in your code, which behaves the same as `0.0.0.0`.
-
----
-
-### 2️⃣ Start the Client
-
-Each user runs the client to connect to the server:
-
-```bash
-python chat_client.py NAME HOST PORT
-```
-
-- `NAME` → your username in the chat  
-- `HOST` → the IP address of the server (e.g., `192.168.1.100`)  
-- `PORT` → the same port used by the server
-
----
-
-## 💬 Example
-
-Start server:
+### Start the Server
 
 ```bash
 python chat_server.py 5000
 ```
 
-Connect two clients:
+The server:
+- Listens on the given port
+- Accepts multiple clients
+- Manages chats and users
+- Broadcasts messages in real time
+
+---
+
+### Start the Client
 
 ```bash
 python chat_client.py Alice 192.168.1.100 5000
-python chat_client.py Bob 192.168.1.100 5000
 ```
 
-Example chat session:
+Arguments:
+- Alice → your nickname
+- 192.168.1.100 → server IP
+- 5000 → server port
+
+---
+
+## 🖥️ Terminal GUI (Real Behavior)
+
+While running, the client behaves like a real chat app:
+
+- Your typing stays at the bottom
+- Incoming messages appear above without breaking input
+- Cursor movement and line clearing simulate a GUI
+- Messages scroll naturally
+
+Example session:
+
+```bash
+---------- general ----------
+Alice> hello everyone
+Bob: hey alice!
+Charlie: this feels like a real app
+Alice> yeah, all in terminal
+```
+
+GitHub cannot render colors, cursor movement, or live updates.  
+These effects are visible only when running the program locally.
+
+---
+
+## 💬 Commands
+
+```bash
+/help
+```
+Show available commands.
+
+```bash
+/users
+```
+List users in the current chat.
+
+```bash
+/dm Bob hello
+```
+Send a private message.
+
+```bash
+/quit
+```
+Exit the chat cleanly.
+
+---
+
+## ⚙️ Network Protocol
+
+Each message sent over TCP uses this format:
 
 ```text
-mazui: Hello everyone!
-mazui: How are you doing today?
-segat: I'm good, thanks! And you?
-potter: Hey guys, what's up?
-segat: Just working on a project.
-potter: Sounds cool!
-mazui: Nice! Let's catch up later.
-mazui: See you all soon.
-
-mazui> 
+[2 bytes length][JSON payload]
 ```
+
+Example payload:
+
+```json
+{
+  "type": "message",
+  "nick": "Alice",
+  "message": "hello world"
+}
+```
+
+---
+
+## 🧠 Architecture
+
+### Server
+
+- Uses select() for non-blocking I/O
+- Tracks:
+  - Chats
+  - Users per chat
+  - Nickname mappings
+- Cleans up disconnected clients automatically
+
+### Client
+
+- Thread for keyboard input
+- Thread for server listener
+- Uses threading.Event for synchronization
+- Reads input character-by-character
+- Redraws terminal dynamically
 
 ---
 
 ## ⚠️ Notes
 
-- The server must be running before clients connect.  
-- Works only on the local network (LAN).  
-- Press **Ctrl+C** in the client to exit the chat.  
-- This project is for educational purposes and to practice Python socket programming.
+- Server must be running before clients connect
+- Designed for LAN usage
+- Terminal behavior depends on ANSI support
+- Educational project, not production-ready
+
+---
+
+## 📚 Learning Goals
+
+- TCP socket communication
+- Message framing
+- Concurrency with threads and select()
+- Terminal UI simulation
+- Client-server architecture
+
+---
+
+🟢 Whatsython Chat  
+A real-time chat application that turns the terminal into a GUI.
