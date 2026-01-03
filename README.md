@@ -87,9 +87,10 @@ Example session:
 
 ```bash
 ---------- general ----------
-Alice> hello everyone
+Alice: hello everyone
 Bob: hey alice!
 Charlie: this feels like a real app
+
 Alice> yeah, all in terminal
 ```
 
