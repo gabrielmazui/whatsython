@@ -165,7 +165,7 @@ def run_keyboard():
     print(f"{localUser}> ", end="", flush=True)
     try:
         chat_started.set()
-        while True:
+        while not stop_event.is_set():
             ch = getch()
             if ch == '\x03':
                 raise KeyboardInterrupt
