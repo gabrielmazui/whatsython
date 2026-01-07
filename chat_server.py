@@ -16,7 +16,6 @@ def json_create(type, user , content):
         d["message"] = content
     return json.dumps(d)
 
-
 def drop_client(soc, read_set, users, buffers, users_by_name, users_chat, users_nicks):
     read_set.discard(soc)
     soc.close()
