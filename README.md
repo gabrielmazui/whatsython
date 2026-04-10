@@ -38,7 +38,7 @@ This project was created as a learning exercise to practice socket programming, 
 
 ---
 
-## 🛠 Requirements
+## Requirements
 
 - Python 3.x
 - Terminal with ANSI escape code support
