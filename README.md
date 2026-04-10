@@ -1,4 +1,4 @@
-# 🟢 Whatsython Chat
+# Whatsython Chat
 
 Whatsython is a terminal-based real-time chat application written in Python, designed to feel as close as possible to a real chat app — entirely inside the terminal.
 
@@ -8,7 +8,7 @@ This project was created as a learning exercise to practice socket programming, 
 
 ---
 
-## ✨ Features
+## Features
 
 - Real-time chat over LAN using TCP sockets
 - Multiple chat rooms
@@ -45,7 +45,7 @@ This project was created as a learning exercise to practice socket programming, 
 
 ---
 
-## 🚀 How to Run
+## How to Run
 
 ### Start the Server
 
@@ -74,7 +74,7 @@ Arguments:
 
 ---
 
-## 🖥️ Terminal GUI (Real Behavior)
+## Terminal GUI (Real Behavior)
 
 While running, the client behaves like a real chat app:
 
@@ -99,7 +99,7 @@ These effects are visible only when running the program locally.
 
 ---
 
-## 💬 Commands
+## Commands
 
 ```bash
 /help
@@ -123,7 +123,7 @@ Exit the chat cleanly.
 
 ---
 
-## ⚙️ Network Protocol
+## Network Protocol
 
 Each message sent over TCP uses this format:
 
@@ -143,7 +143,7 @@ Example payload:
 
 ---
 
-## 🧠 Architecture
+## Architecture
 
 ### Server
 
@@ -164,7 +164,7 @@ Example payload:
 
 ---
 
-## ⚠️ Notes
+## Notes
 
 - Server must be running before clients connect
 - Designed for LAN usage
@@ -173,7 +173,7 @@ Example payload:
 
 ---
 
-## 📚 Learning Goals
+## Learning Goals
 
 - TCP socket communication
 - Message framing
@@ -183,5 +183,5 @@ Example payload:
 
 ---
 
-🟢 Whatsython Chat  
+Whatsython Chat  
 A real-time chat application that turns the terminal into a GUI.
